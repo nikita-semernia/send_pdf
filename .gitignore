@@ -1,0 +1,12 @@
+configs/config.json
+configs/students.json
+*.log
+
+temp/
+tmp/
+output/
+exports/
+
+*.pdf
+*.png
+*.zip
