@@ -8,12 +8,27 @@ import requests
 import logging
 from logging.handlers import RotatingFileHandler
 from winotify import Notification
-import argparse
 
 
-# === CONFIG ===
-BASE_DIR = Path(__file__).resolve().parent
-CONFIG_PATH = BASE_DIR / "configs" / "config.json"
+# === PATHS / CONFIG ===
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+# Works in both layouts:
+# 1) repo_root/send_pdf.py
+# 2) repo_root/python/send_pdf.py
+if (SCRIPT_DIR / "configs").exists():
+    PROJECT_ROOT = SCRIPT_DIR
+else:
+    PROJECT_ROOT = SCRIPT_DIR.parent
+
+CONFIG_DIR = PROJECT_ROOT / "configs"
+LOG_DIR = PROJECT_ROOT / "logs"
+
+CONFIG_PATH = CONFIG_DIR / "config.json"
+DEFAULT_STUDENTS_PATH = CONFIG_DIR / "students.json"
+
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
 
 def load_config() -> dict:
     if not CONFIG_PATH.exists():
@@ -27,11 +42,6 @@ def get_bot_token() -> str:
     if not token:
         raise ValueError("bot_token missing in config.json")
     return token
-
-# === LOGS ===
-
-LOG_DIR = BASE_DIR / "logs"
-LOG_DIR.mkdir(exist_ok=True)
 
 logger = logging.getLogger("send_pdf")
 logger.setLevel(logging.INFO)
@@ -186,7 +196,7 @@ def main() -> int:
     quality_profile = (args.profile or "").strip()
     caption = (args.caption or "").rstrip()
     log_path = (args.log_path or "").strip()
-    students_path = Path(args.students_json).expanduser() if args.students_json else (BASE_DIR / "students.json")
+    students_path = Path(args.students_json).expanduser() if args.students_json else DEFAULT_STUDENTS_PATH
 
     # Overwrite log file at start (so VBA reads only this run)
     if log_path:
