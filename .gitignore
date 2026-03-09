@@ -1,12 +1,24 @@
+# Local secrets
+config.json
+students.json
 configs/config.json
 configs/students.json
+
+# Logs
+logs/
 *.log
 
+# Generated files
+*.pdf
+*.png
 temp/
 tmp/
 output/
 exports/
 
-*.pdf
-*.png
-*.zip
+# Python
+__pycache__/
+*.pyc
+
+# Office temp
+~$*.ppt*
