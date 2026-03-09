@@ -18,9 +18,9 @@ End Function
 
 Public Function VFM_ExportModules(ByVal stModuleNames As String, ByVal stFolderPath As String)
 
-  Const vbext_ct_StdModule = 1
-  Const vbext_ct_ClassModule = 2
-  Const vbext_ct_MSForm = 3
+  Const VBEXT_CT_STDMODULE = 1
+  Const VBEXT_CT_CLASSMODULE = 2
+  Const VBEXT_CT_MSFORM = 3
   
   Dim cmpComponent
   Dim stFileName As String
@@ -32,11 +32,11 @@ Public Function VFM_ExportModules(ByVal stModuleNames As String, ByVal stFolderP
       If InStr(stModuleNames, " " & cmpComponent.Name & " ") Then
         stFileName = vbNullString
         Select Case .VBComponents(cmpComponent.Name).Type
-          Case vbext_ct_ClassModule
+          Case VBEXT_CT_CLASSMODULE
             stFileName = cmpComponent.Name & ".cls"
-          Case vbext_ct_MSForm
+          Case VBEXT_CT_MSFORM
             stFileName = cmpComponent.Name & ".frm"
-          Case vbext_ct_StdModule
+          Case VBEXT_CT_STDMODULE
             stFileName = cmpComponent.Name & ".bas"
         End Select
         If stFileName <> vbNullString Then

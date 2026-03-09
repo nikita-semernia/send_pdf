@@ -58,6 +58,11 @@ Public Sub ManageStudents(ByVal control As IRibbonControl)
     frmStudentsManage.Show vbModal
 End Sub
 
+Public Sub Ribbon_ExportVba(ByVal control As IRibbonControl)
+    ExportAllVba
+End Sub
+
+
 Public Sub ExportAndSendPDF()
     On Error GoTo FatalError
 
@@ -97,7 +102,7 @@ Public Sub ExportAndSendPDF()
     ' ---- 6) Run Python and capture output to a log ----
     Dim pythonPath As String, scriptPath As String, logPath As String
     pythonPath = "C:\Users\nikit\AppData\Local\Programs\Python\Python312\python.exe"
-    scriptPath = "C:\Notes\plugins\send_pdf\send_pdf.py"
+    scriptPath = "C:\Notes\plugins\send_pdf\python\send_pdf.py"
     logPath = Environ$("TEMP") & "\ppt_send_log.txt"
 
     Dim exitCode As Long
